@@ -84,4 +84,4 @@ npm run build
 
 ## 補足
 
-この実行環境では npm registry の制限により scoped package の取得が `403 Forbidden` になる場合があります。通常のローカル環境またはVercelで `npm install` が通る前提で、依存関係と設定を整えています。Next.js 16 のため Node.js は 20.9.0 以上を想定しています。
+この実行環境では npm registry の制限により scoped package の取得が `403 Forbidden` になる場合があります。通常のローカル環境またはVercelで `npm install` が通る前提で、依存関係と設定を整えています。
