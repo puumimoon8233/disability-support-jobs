@@ -5,17 +5,19 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 
 export const metadata: Metadata = {
-  title: "障害者支援IT Jobs",
-  description: "ITを使って障害者支援に関われる企業・求人を探せるサービスです。",
+  title: "Glow Compass",
+  description: "障害福祉×ITの仕事を横断して探せるまとめサイト",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="ja">
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+      <body className="min-h-screen bg-background text-text antialiased">
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
