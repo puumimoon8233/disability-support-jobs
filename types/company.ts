@@ -28,3 +28,18 @@ export type Company = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type CompanyCardProfile = {
+  id: string;
+  name: string;
+  slug?: string;
+  description: string;
+  businessArea: string;
+  supportAreas: string[];
+  technologyRole: string;
+  workStyles: string[];
+  location: string;
+  organizationType: string;
+  foundedYear: number;
+  openJobCount?: number;
+};

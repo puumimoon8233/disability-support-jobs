@@ -1,6 +1,8 @@
 import { Container } from "@/components/layout/Container";
+import { CompanyCard } from "@/components/companies/CompanyCard";
 import { FeaturedJobCard } from "@/components/jobs/FeaturedJobCard";
 import { featuredJobs } from "@/data/featuredJobs";
+import { sampleCompanies } from "@/data/sampleCompanies";
 
 const popularTags = [
   "React",
@@ -150,6 +152,26 @@ export default function Home() {
               </button>
             ))}
           </div>
+        </section>
+
+        <section aria-labelledby="featured-companies-title">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold tracking-[0.2em] text-primary">COMPANIES</p>
+              <h2 id="featured-companies-title" className="mt-3 text-2xl font-bold tracking-tight text-text sm:text-3xl">
+                掲載企業
+              </h2>
+            </div>
+            <p className="max-w-2xl text-base leading-7 text-text/70">障害福祉や社会課題にITで取り組む企業を紹介します。</p>
+          </div>
+
+          <ul className="mt-8 grid gap-5 lg:grid-cols-3">
+            {sampleCompanies.map((company) => (
+              <li key={company.id} className="min-w-0">
+                <CompanyCard company={company} />
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section aria-labelledby="featured-jobs-title">
