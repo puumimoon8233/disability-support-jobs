@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { getCategoryName, supportAreaLabels } from "@/lib/labels";
 import type { Company, CompanyCardProfile } from "@/types/company";
 
 type CompanyCardProps = {
   company: CompanyCardProfile | Company;
+  openJobCount?: number;
 };
 
 function getInitial(name: string) {
@@ -11,8 +13,14 @@ function getInitial(name: string) {
 
 function formatCompany(
   company: CompanyCardProfile | Company,
+  openJobCount?: number,
 ): CompanyCardProfile {
-  if ("businessArea" in company) return company;
+  if ("businessArea" in company) {
+    return {
+      ...company,
+      openJobCount: openJobCount ?? company.openJobCount,
+    };
+  }
 
   const workStyles = [
     company.isRemoteFriendly ? "リモート可" : undefined,
@@ -23,6 +31,7 @@ function formatCompany(
   return {
     id: company.id,
     name: company.name,
+    slug: company.slug,
     description: company.shortDescription,
     businessArea: company.categories
       .map((category) => getCategoryName(category))
@@ -33,7 +42,7 @@ function formatCompany(
     location: company.location ?? "未設定",
     organizationType: "企業",
     foundedYear: company.foundedYear ?? 0,
-    openJobCount: 0,
+    openJobCount,
   };
 }
 
@@ -71,8 +80,11 @@ function TagList({
   );
 }
 
-export function CompanyCard({ company: rawCompany }: CompanyCardProps) {
-  const company = formatCompany(rawCompany);
+export function CompanyCard({
+  company: rawCompany,
+  openJobCount,
+}: CompanyCardProps) {
+  const company = formatCompany(rawCompany, openJobCount);
 
   return (
     <article className="flex h-full min-w-0 flex-col rounded-3xl border border-border bg-white p-6 shadow-[0_8px_28px_rgba(43,43,43,0.03)] sm:p-7">
@@ -88,7 +100,16 @@ export function CompanyCard({ company: rawCompany }: CompanyCardProps) {
             {company.businessArea}
           </p>
           <h3 className="mt-1 text-xl font-bold leading-tight tracking-tight text-text">
-            {company.name}
+            {company.slug ? (
+              <Link
+                href={`/companies/${company.slug}`}
+                className="rounded-md outline-none hover:text-primary hover:underline focus:ring-4 focus:ring-primary/15"
+              >
+                {company.name}
+              </Link>
+            ) : (
+              company.name
+            )}
           </h3>
         </div>
       </div>
@@ -117,13 +138,15 @@ export function CompanyCard({ company: rawCompany }: CompanyCardProps) {
       </div>
 
       <div className="mt-auto pt-6">
-        <p className="text-sm font-semibold text-text/70">
-          掲載中の求人{" "}
-          <span className="text-base font-bold text-text">
-            {company.openJobCount}
-          </span>
-          件
-        </p>
+        {typeof company.openJobCount === "number" && (
+          <p className="text-sm font-semibold text-text/70">
+            掲載中の求人{" "}
+            <span className="text-base font-bold text-text">
+              {company.openJobCount}
+            </span>
+            件
+          </p>
+        )}
         <dl className="mt-4 grid gap-2 border-t border-border pt-4 text-sm text-text/65 sm:grid-cols-3">
           <div>
             <dt className="font-semibold text-text">所在地</dt>

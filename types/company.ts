@@ -32,6 +32,7 @@ export type Company = {
 export type CompanyCardProfile = {
   id: string;
   name: string;
+  slug?: string;
   description: string;
   businessArea: string;
   supportAreas: string[];
@@ -40,5 +41,5 @@ export type CompanyCardProfile = {
   location: string;
   organizationType: string;
   foundedYear: number;
-  openJobCount: number;
+  openJobCount?: number;
 };
