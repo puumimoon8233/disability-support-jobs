@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #2f7d7a;
+  --color-accent: #f4b942;
+  --color-background: #fafaf8;
+  --color-text: #2b2b2b;
+  --color-border: #e6e7e8;
+}
+
 :root {
-  --background: #f8fafc;
-  --foreground: #102033;
+  --background: #fafaf8;
+  --foreground: #2b2b2b;
+  --primary: #2f7d7a;
+  --accent: #f4b942;
+  --border: #e6e7e8;
 }
 
 body {
@@ -11,4 +22,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-a { text-underline-offset: 4px; }
+a {
+  text-underline-offset: 4px;
+}
