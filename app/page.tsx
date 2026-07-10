@@ -1,4 +1,6 @@
 import { Container } from "@/components/layout/Container";
+import { FeaturedJobCard } from "@/components/jobs/FeaturedJobCard";
+import { featuredJobs } from "@/data/featuredJobs";
 
 const popularTags = [
   "React",
@@ -148,6 +150,26 @@ export default function Home() {
               </button>
             ))}
           </div>
+        </section>
+
+        <section aria-labelledby="featured-jobs-title">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold tracking-[0.2em] text-primary">FEATURED JOBS</p>
+              <h2 id="featured-jobs-title" className="mt-3 text-2xl font-bold tracking-tight text-text sm:text-3xl">
+                注目の仕事
+              </h2>
+            </div>
+            <p className="max-w-2xl text-base leading-7 text-text/70">障害福祉の現場をITで支える仕事を紹介します。</p>
+          </div>
+
+          <ul className="mt-8 grid gap-5 lg:grid-cols-3">
+            {featuredJobs.map((job) => (
+              <li key={`${job.companyName}-${job.title}`} className="min-w-0">
+                <FeaturedJobCard job={job} />
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </Container>

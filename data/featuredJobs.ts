@@ -1,0 +1,40 @@
+import type { FeaturedJob } from "@/types/featured-job";
+
+export const featuredJobs: FeaturedJob[] = [
+  {
+    title: "障害福祉サービスのプロダクト開発エンジニア",
+    companyName: "サンプルケア株式会社（表示確認用）",
+    sourceSite: "Wantedly（サンプル）",
+    location: "東京都",
+    employmentType: "正社員",
+    workStyle: "フルリモート可",
+    itCategory: "フロントエンド",
+    supportAreas: ["就労支援", "福祉DX"],
+    summary: "障害福祉事業所で使われる業務支援サービスの画面改善と新機能開発に携わるサンプル求人です。",
+    checkedAt: "2026年7月10日",
+  },
+  {
+    title: "発達障害支援の現場を支える業務支援システム開発",
+    companyName: "サンプルリンク合同会社（表示確認用）",
+    sourceSite: "Green（サンプル）",
+    location: "神奈川県",
+    employmentType: "契約社員",
+    workStyle: "ハイブリッド勤務",
+    itCategory: "バックエンド",
+    supportAreas: ["発達障害支援", "業務支援システム"],
+    summary: "支援記録や面談予定を扱うシステムのAPI設計・データ連携を担当する、比較表示のためのサンプル求人です。",
+    checkedAt: "2026年7月10日",
+  },
+  {
+    title: "精神障害支援プロダクトのアクセシビリティ推進PM",
+    companyName: "サンプルウェルビーイング株式会社（表示確認用）",
+    sourceSite: "求人ボックス（サンプル）",
+    location: "全国",
+    employmentType: "業務委託",
+    workStyle: "リモート可",
+    itCategory: "PM",
+    supportAreas: ["精神障害支援", "アクセシビリティ"],
+    summary: "利用者と支援者の双方が迷わず使えるプロダクトを目指し、要件整理と改善計画を進めるサンプル求人です。",
+    checkedAt: "2026年7月10日",
+  },
+];
