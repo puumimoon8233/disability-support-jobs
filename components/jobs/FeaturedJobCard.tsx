@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { FeaturedJob } from "@/types/featured-job";
 
 function JobTag({ children, tone }: { children: string; tone: "support" | "role" | "work" }) {
@@ -19,7 +20,15 @@ export function FeaturedJobCard({ job }: { job: FeaturedJob }) {
         <span>{job.employmentType}</span>
       </div>
 
-      <h3 className="mt-4 text-xl font-bold leading-8 tracking-tight text-text">{job.title}</h3>
+      <h3 className="mt-4 text-xl font-bold leading-8 tracking-tight text-text">
+        {job.detailPath ? (
+          <Link className="rounded-md outline-none transition hover:text-primary focus:ring-4 focus:ring-primary/15" href={job.detailPath}>
+            {job.title}
+          </Link>
+        ) : (
+          job.title
+        )}
+      </h3>
       <p className="mt-2 text-sm font-semibold text-primary">{job.companyName}</p>
 
       <p className="mt-4 line-clamp-3 text-sm leading-7 text-text/70">{job.summary}</p>
@@ -33,6 +42,15 @@ export function FeaturedJobCard({ job }: { job: FeaturedJob }) {
         <JobTag tone="role">{job.itCategory}</JobTag>
         <JobTag tone="work">{job.workStyle}</JobTag>
       </div>
+
+      {job.detailPath && (
+        <Link
+          href={job.detailPath}
+          className="mt-5 inline-flex w-fit items-center rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary outline-none transition hover:border-primary/35 hover:bg-primary/5 focus:ring-4 focus:ring-primary/15"
+        >
+          詳細を見る
+        </Link>
+      )}
 
       <dl className="mt-auto grid gap-3 pt-6 text-xs leading-5 text-text/55 sm:grid-cols-2">
         <div>
