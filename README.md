@@ -53,6 +53,16 @@ npm run build
 - `npm run lint`: ESLint で Next.js / TypeScript の静的解析を実行します。
 - `npm run build`: Vercel と同等の本番ビルド確認を行います。
 
+## 開発フロー
+
+1. 最新のmainから新しいCodex Taskを作成する
+2. 1 Task = 1 PR = 1目的を基本とする
+3. 実装後にbuild・typecheck・差分を確認する
+4. GitHubでFiles changedとCodex Reviewを確認する
+5. Vercel Previewでマージ前の画面を確認する
+6. 指摘を修正し、未解決コメントがない状態でmainへマージする
+7. マージ後は次のTaskを最新mainから作成する
+
 ## 検索・絞り込み仕様
 
 企業一覧と求人一覧では、URLクエリで検索条件を扱います。
