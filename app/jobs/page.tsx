@@ -3,8 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { JobCard } from "@/components/jobs/JobCard";
 import { FilterForm } from "@/components/search/FilterForm";
-import { categories } from "@/data/categories";
-import { filterJobs } from "@/lib/filters";
+import { filterJobs, getActiveFilters } from "@/lib/filters";
 
 export const metadata: Metadata = {
   title: "障害福祉×ITの仕事を探す | Glow Compass",
@@ -15,29 +14,10 @@ type JobsPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const firstValue = (params: Record<string, string | string[] | undefined>, key: string) => {
-  const value = params[key];
-  return Array.isArray(value) ? value[0] : value;
-};
-
-const getActiveFilters = (params: Record<string, string | string[] | undefined>) => {
-  const keyword = firstValue(params, "q")?.trim();
-  const selectedCategory = firstValue(params, "category") ?? "";
-  const category = categories.find((item) => item.slug === selectedCategory);
-
-  return [
-    keyword ? { key: "q", label: keyword } : undefined,
-    category ? { key: "category", label: category.name } : undefined,
-    firstValue(params, "remote") === "true" ? { key: "remote", label: "リモート可" } : undefined,
-    firstValue(params, "sideJob") === "true" ? { key: "sideJob", label: "副業可" } : undefined,
-    firstValue(params, "flex") === "true" ? { key: "flex", label: "フレックス" } : undefined,
-  ].filter((item): item is { key: string; label: string } => Boolean(item));
-};
-
 export default async function JobsPage({ searchParams }: JobsPageProps) {
   const params = await searchParams;
   const filteredJobs = filterJobs(params);
-  const activeFilters = getActiveFilters(params);
+  const activeFilters = getActiveFilters(params, "jobs");
   const resultLabel = filteredJobs.length === 0 ? "条件に一致する仕事は見つかりませんでした" : `${filteredJobs.length}件の仕事が見つかりました`;
 
   return (
@@ -70,7 +50,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </div>
         </div>
         <div className="mt-5">
-          <FilterForm basePath="/jobs" searchParams={params} />
+          <FilterForm basePath="/jobs" searchParams={params} target="jobs" />
         </div>
       </section>
 
@@ -83,7 +63,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             </div>
             {activeFilters.length > 0 && (
               <div className="lg:max-w-xl">
-                <p className="text-sm font-semibold text-text/70">検索条件：</p>
+                <p className="text-sm font-semibold text-text/70">現在の検索条件</p>
                 <ul className="mt-2 flex flex-wrap gap-2" aria-label="適用中の検索条件">
                   {activeFilters.map((filter) => (
                     <li key={filter.key} className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-sm font-semibold text-primary">

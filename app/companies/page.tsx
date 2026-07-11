@@ -3,9 +3,8 @@ import Link from "next/link";
 import { CompanyCard } from "@/components/companies/CompanyCard";
 import { Container } from "@/components/layout/Container";
 import { FilterForm } from "@/components/search/FilterForm";
-import { categories } from "@/data/categories";
 import { getJobsByCompanyId } from "@/lib/data-helpers";
-import { filterCompanies } from "@/lib/filters";
+import { filterCompanies, getActiveFilters } from "@/lib/filters";
 
 export const metadata: Metadata = {
   title: "障害福祉にITで取り組む企業を探す | Glow Compass",
@@ -17,42 +16,12 @@ type CompaniesPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const firstValue = (
-  params: Record<string, string | string[] | undefined>,
-  key: string,
-) => {
-  const value = params[key];
-  return Array.isArray(value) ? value[0] : value;
-};
-
-const getActiveFilters = (
-  params: Record<string, string | string[] | undefined>,
-) => {
-  const keyword = firstValue(params, "q")?.trim();
-  const selectedCategory = firstValue(params, "category") ?? "";
-  const category = categories.find((item) => item.slug === selectedCategory);
-
-  return [
-    keyword ? { key: "q", label: keyword } : undefined,
-    category ? { key: "category", label: category.name } : undefined,
-    firstValue(params, "remote") === "true"
-      ? { key: "remote", label: "リモート可" }
-      : undefined,
-    firstValue(params, "sideJob") === "true"
-      ? { key: "sideJob", label: "副業可" }
-      : undefined,
-    firstValue(params, "flex") === "true"
-      ? { key: "flex", label: "フレックス" }
-      : undefined,
-  ].filter((item): item is { key: string; label: string } => Boolean(item));
-};
-
 export default async function CompaniesPage({
   searchParams,
 }: CompaniesPageProps) {
   const params = await searchParams;
   const filteredCompanies = filterCompanies(params);
-  const activeFilters = getActiveFilters(params);
+  const activeFilters = getActiveFilters(params, "companies");
   const resultLabel =
     filteredCompanies.length === 0
       ? "条件に一致する企業は見つかりませんでした"
@@ -104,7 +73,7 @@ export default async function CompaniesPage({
           </div>
         </div>
         <div className="mt-5">
-          <FilterForm basePath="/companies" searchParams={params} />
+          <FilterForm basePath="/companies" searchParams={params} target="companies" />
         </div>
       </section>
 
@@ -127,7 +96,7 @@ export default async function CompaniesPage({
             </div>
             {activeFilters.length > 0 && (
               <div className="lg:max-w-xl">
-                <p className="text-sm font-semibold text-text/70">検索条件：</p>
+                <p className="text-sm font-semibold text-text/70">現在の検索条件</p>
                 <ul
                   className="mt-2 flex flex-wrap gap-2"
                   aria-label="適用中の検索条件"
