@@ -1,34 +1,40 @@
+import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { CompanyCard } from "@/components/companies/CompanyCard";
 import { FeaturedJobCard } from "@/components/jobs/FeaturedJobCard";
+import { HomeSearchForm } from "@/components/home/HomeSearchForm";
 import { featuredJobs } from "@/data/featuredJobs";
 import { sampleCompanies } from "@/data/sampleCompanies";
 
 const popularTags = [
-  "React",
-  "フロントエンド",
-  "バックエンド",
-  "PM",
-  "リモート可",
-  "副業可",
-  "福祉DX",
-  "就労支援",
-  "発達障害支援",
-  "精神障害支援",
-  "教育",
-  "医療",
+  { label: "React", href: "/jobs?q=React" },
+  { label: "フロントエンド", href: "/jobs?role=frontend-engineer" },
+  { label: "バックエンド", href: "/jobs?role=backend-engineer" },
+  { label: "PM", href: "/jobs?role=product-manager" },
+  { label: "リモート可", href: "/jobs?remote=true" },
+  { label: "副業可", href: "/jobs?sideJob=true" },
+  { label: "福祉DX", href: "/jobs?category=welfare-dx" },
+  { label: "就労支援", href: "/jobs?category=employment-support" },
+  { label: "発達障害支援", href: "/jobs?q=発達障害" },
+  { label: "精神障害支援", href: "/jobs?q=精神障害" },
+  { label: "教育", href: "/jobs?category=education" },
+  { label: "医療", href: "/jobs?q=医療" },
 ];
 
 const socialIssues = [
-  { title: "就労支援", description: "働きたい気持ちに寄り添う仕組みづくり" },
-  { title: "発達障害支援", description: "特性を理解し、力を発揮できる環境を支える" },
-  { title: "精神障害支援", description: "安心して回復と挑戦を続けられる支援へ" },
-  { title: "教育", description: "学びの選択肢を広げるサービス開発" },
-  { title: "医療", description: "ケアの現場と利用者をつなぐIT活用" },
-  { title: "NPO", description: "地域や社会に根ざした活動を技術で後押し" },
+  { title: "就労支援", description: "働きたい気持ちに寄り添う仕組みづくり", href: "/jobs?category=employment-support" },
+  { title: "発達障害支援", description: "特性を理解し、力を発揮できる環境を支える", href: "/jobs?q=発達障害" },
+  { title: "精神障害支援", description: "安心して回復と挑戦を続けられる支援へ", href: "/jobs?q=精神障害" },
+  { title: "教育", description: "学びの選択肢を広げるサービス開発", href: "/jobs?category=education" },
+  { title: "医療", description: "ケアの現場と利用者をつなぐIT活用", href: "/jobs?q=医療" },
 ];
 
-const jobTypes = ["Frontend", "Backend", "Full Stack", "UI/UX", "PM", "インフラ", "DevOps", "QA"];
+const jobTypes = [
+  { label: "Frontend", href: "/jobs?role=frontend-engineer" },
+  { label: "Backend", href: "/jobs?role=backend-engineer" },
+  { label: "UI/UX", href: "/jobs?role=designer" },
+  { label: "PM", href: "/jobs?role=product-manager" },
+];
 
 export default function Home() {
   return (
@@ -53,32 +59,7 @@ export default function Home() {
             </div>
 
             <div className="mx-auto mt-8 max-w-3xl">
-              <div className="rounded-[1.5rem] border border-border bg-background p-2 shadow-inner shadow-primary/5">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <div className="flex-1">
-                    <label htmlFor="home-search" className="sr-only">
-                      探したい仕事のキーワード
-                    </label>
-                    <input
-                      id="home-search"
-                      type="search"
-                      readOnly
-                      placeholder="React、就労支援、リモート..."
-                      className="min-h-14 w-full rounded-2xl border border-transparent bg-white px-5 text-base text-text placeholder:text-text/45 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15"
-                      aria-describedby="home-search-note"
-                    />
-                    <p id="home-search-note" className="sr-only">
-                      検索機能は今後実装予定です。
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className="min-h-14 rounded-2xl bg-primary px-8 text-base font-semibold text-white outline-none transition hover:-translate-y-0.5 hover:bg-primary/90 focus:ring-4 focus:ring-primary/25 focus:ring-offset-2 focus:ring-offset-background"
-                  >
-                    仕事を探す
-                  </button>
-                </div>
-              </div>
+              <HomeSearchForm />
 
               <div className="mt-6" aria-labelledby="popular-tags-title">
                 <h3 id="popular-tags-title" className="text-sm font-semibold text-text">
@@ -86,13 +67,13 @@ export default function Home() {
                 </h3>
                 <div className="mt-3 flex flex-wrap gap-2.5">
                   {popularTags.map((tag) => (
-                    <button
-                      key={tag}
-                      type="button"
-                      className="rounded-full border border-primary/15 bg-primary/5 px-4 py-2 text-sm font-medium text-primary outline-none transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary/10 focus:ring-4 focus:ring-primary/15"
+                    <Link
+                      key={tag.label}
+                      href={tag.href}
+                      className="rounded-full border border-primary/15 bg-primary/5 px-4 py-2 text-sm font-medium text-primary no-underline outline-none transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary/10 focus:ring-4 focus:ring-primary/15"
                     >
-                      {tag}
-                    </button>
+                      {tag.label}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -113,10 +94,10 @@ export default function Home() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {socialIssues.map((issue) => (
-              <button
+              <Link
                 key={issue.title}
-                type="button"
-                className="group flex min-h-36 w-full flex-col justify-between rounded-3xl border border-border bg-white p-6 text-left shadow-[0_10px_32px_rgba(43,43,43,0.04)] outline-none transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(47,125,122,0.1)] focus:ring-4 focus:ring-primary/15"
+                href={issue.href}
+                className="group flex min-h-36 w-full flex-col justify-between rounded-3xl border border-border bg-white p-6 text-left no-underline shadow-[0_10px_32px_rgba(43,43,43,0.04)] outline-none transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(47,125,122,0.1)] focus:ring-4 focus:ring-primary/15"
               >
                 <span>
                   <span className="block text-lg font-bold text-text">{issue.title}</span>
@@ -125,7 +106,7 @@ export default function Home() {
                 <span className="mt-5 self-end text-xl text-primary transition group-hover:translate-x-1" aria-hidden="true">
                   →
                 </span>
-              </button>
+              </Link>
             ))}
           </div>
         </section>
@@ -143,13 +124,13 @@ export default function Home() {
 
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {jobTypes.map((jobType) => (
-              <button
-                key={jobType}
-                type="button"
-                className="rounded-3xl border border-border bg-white px-5 py-6 text-left text-base font-semibold text-text shadow-[0_10px_32px_rgba(43,43,43,0.04)] outline-none transition hover:-translate-y-1 hover:border-primary/30 hover:text-primary hover:shadow-[0_16px_40px_rgba(47,125,122,0.1)] focus:ring-4 focus:ring-primary/15 sm:text-lg"
+              <Link
+                key={jobType.label}
+                href={jobType.href}
+                className="rounded-3xl border border-border bg-white px-5 py-6 text-left text-base font-semibold text-text no-underline shadow-[0_10px_32px_rgba(43,43,43,0.04)] outline-none transition hover:-translate-y-1 hover:border-primary/30 hover:text-primary hover:shadow-[0_16px_40px_rgba(47,125,122,0.1)] focus:ring-4 focus:ring-primary/15 sm:text-lg"
               >
-                {jobType}
-              </button>
+                {jobType.label}
+              </Link>
             ))}
           </div>
         </section>
