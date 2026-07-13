@@ -61,7 +61,7 @@ export const getActiveFilters = (params: SearchParams, target: FilterTarget): Ac
     role ? { key: "role", label: jobRoleLabels[role] } : undefined,
     employmentType ? { key: "employmentType", label: employmentTypeLabels[employmentType] } : undefined,
     hasFlag(params, "remote") ? { key: "remote", label: "リモート可" } : undefined,
-    target === "companies" && hasFlag(params, "sideJob") ? { key: "sideJob", label: "副業可" } : undefined,
+    hasFlag(params, "sideJob") ? { key: "sideJob", label: "副業可" } : undefined,
     hasFlag(params, "flex") ? { key: "flex", label: "フレックス" } : undefined,
   ].filter((item): item is ActiveFilter => Boolean(item));
 };
@@ -90,6 +90,7 @@ export const filterJobs = (params: SearchParams): Job[] => {
   const selectedRole = getValidJobRole(params);
   const selectedEmploymentType = getValidEmploymentType(params);
   const remote = hasFlag(params, "remote");
+  const sideJob = hasFlag(params, "sideJob");
   const flex = hasFlag(params, "flex");
 
   return jobs.filter((job) => {
@@ -100,6 +101,7 @@ export const filterJobs = (params: SearchParams): Job[] => {
     if (selectedRole && job.role !== selectedRole) return false;
     if (selectedEmploymentType && job.employmentType !== selectedEmploymentType) return false;
     if (remote && !job.isRemoteAvailable) return false;
+    if (sideJob && !job.allowsSideJob) return false;
     if (flex && !job.hasFlexibleHours) return false;
     return true;
   });

@@ -96,12 +96,10 @@ export function FilterForm({ basePath, searchParams, target }: FilterFormProps) 
             <input type="checkbox" name="remote" value="true" defaultChecked={valueOf(searchParams, "remote") === "true"} className="size-4 accent-primary" />
             リモート可
           </label>
-          {target === "companies" && (
-            <label className={checkboxClass}>
-              <input type="checkbox" name="sideJob" value="true" defaultChecked={valueOf(searchParams, "sideJob") === "true"} className="size-4 accent-primary" />
-              副業可
-            </label>
-          )}
+          <label className={checkboxClass}>
+            <input type="checkbox" name="sideJob" value="true" defaultChecked={valueOf(searchParams, "sideJob") === "true"} className="size-4 accent-primary" />
+            副業可
+          </label>
           <label className={checkboxClass}>
             <input type="checkbox" name="flex" value="true" defaultChecked={valueOf(searchParams, "flex") === "true"} className="size-4 accent-primary" />
             フレックス
