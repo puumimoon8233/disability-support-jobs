@@ -20,12 +20,13 @@ export function HeaderNavigation() {
       <ul className="flex items-center gap-1.5 sm:gap-2">
         {navigationItems.map((item) => {
           const isActive = isActivePath(pathname, item.activePathPrefix);
+          const isCurrentPage = pathname === item.href;
 
           return (
             <li key={item.href}>
               <Link
                 href={item.href}
-                aria-current={isActive ? "page" : undefined}
+                aria-current={isCurrentPage ? "page" : undefined}
                 className={`inline-flex min-h-11 items-center rounded-full px-3 py-2 text-sm font-semibold underline-offset-8 outline-none transition-colors hover:bg-primary/5 hover:text-primary focus-visible:ring-4 focus-visible:ring-primary/15 sm:px-4 sm:text-base ${
                   isActive ? "bg-primary/5 text-primary underline decoration-2" : "text-text/70"
                 }`}
